@@ -5,6 +5,14 @@
   "buildOptions": {
     "debugType": "portable"
   },
+  "packOptions": {
+    "repository": {
+      "url": "https://github.com/luqizheng/Ornament.Identity"
+    },
+    "projectUrl": "https://github.com/luqizheng/Ornament.Identity",
+    "tags": [ "Ornament", "Identity" ],
+    "summary": "DBConnection for Unit of work"
+  },
   "frameworks": {
     "netstandard1.6": {
       "imports": "dnxcore50"

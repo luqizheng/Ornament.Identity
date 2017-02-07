@@ -11,9 +11,17 @@
       },
       "dependencies": {
         "FluentNHibernate": "2.0.3",
-        "NHibernate": "4.1.1.4000",
+        "NHibernate": "4.1.1.4000"
       }
     }
+  },
+  "packOptions": {
+    "repository": {
+      "url": "https://github.com/luqizheng/Ornament.Identity"
+    },
+    "projectUrl": "https://github.com/luqizheng/Ornament.Identity",
+    "tags": [ "Ornament", "Identity" ],
+    "summary": "DBConnection for Unit of work"
   },
   "dependencies": {
     "Microsoft.AspNetCore.Identity": "1.1.0",
