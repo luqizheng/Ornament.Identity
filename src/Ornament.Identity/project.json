@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0-*",
+  "description": "Ornament.Identity Class Library",
+  "authors": [ "leo" ],
+  "buildOptions": {
+    "debugType": "portable"
+  },
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    },
+    "net461": { "imports": "dnxcore50" }
+  },
+  "dependencies": {
+    "NETStandard.Library": "1.6.1",
+    "Microsoft.AspNetCore.Identity": "1.1.0",
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.1.0",
+    "Ornament.Domain": "1.1.3"
+  }
+}
