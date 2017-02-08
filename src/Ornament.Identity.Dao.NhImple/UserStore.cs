@@ -277,7 +277,7 @@ namespace Ornament.Identity.Dao.NhImple
             //return Task.FromResult<TUser>(Queryable.FirstOrDefault<TUser>(Queryable.Where<TUser>(this.Context.Query<TUser>(), (Expression<Func<TUser, bool>>)(u => u.UserName.ToUpper() == userName.ToUpper()))));
             return Task.Run(() =>
             {
-                var normalUserNameProp = Projections.Property<TUser>(s => s.LoginId);
+                var normalUserNameProp = Projections.Property<TUser>(s => s.UserName);
                 var user = DetachedCriteria.For<TUser>()
                     .Add(Restrictions.Eq(normalUserNameProp, normalizedUserName).IgnoreCase())
                     .GetExecutableCriteria(Context).UniqueResult<TUser>();
@@ -298,7 +298,7 @@ namespace Ornament.Identity.Dao.NhImple
                 foreach (var identityUserLogin in user.Logins)
                     result.Add(new UserLoginInfo(identityUserLogin.LoginProvider,
                         identityUserLogin.ProviderKey,
-                        user.LoginId));
+                        user.UserName));
                 return result;
             }, cancellationToken);
         }
@@ -311,7 +311,7 @@ namespace Ornament.Identity.Dao.NhImple
 
             return Task.Run(() =>
             {
-                var result = user.LoginId;
+                var result = user.UserName;
 
                 return result;
             }, cancellationToken);
@@ -326,7 +326,7 @@ namespace Ornament.Identity.Dao.NhImple
         public Task<string> GetUserNameAsync(TUser user, CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
-            return Task.FromResult(user.LoginId);
+            return Task.FromResult(user.UserName);
         }
 
         public Task RemoveLoginAsync(TUser user,
@@ -358,7 +358,7 @@ namespace Ornament.Identity.Dao.NhImple
         {
             ThrowIfDisposed();
             if (user == null) throw new ArgumentNullException(nameof(user));
-            user.LoginId = normalizedName;
+            user.UserName = normalizedName;
             return Task.FromResult(0);
         }
 
@@ -367,7 +367,7 @@ namespace Ornament.Identity.Dao.NhImple
         {
             ThrowIfDisposed();
             if (user == null) throw new ArgumentNullException(nameof(user));
-            user.LoginId = userName;
+            user.UserName = userName;
             return Task.FromResult(0);
         }
 

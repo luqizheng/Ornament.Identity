@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-*",
+  "version": "0.4.2.3",
   "description": "Ornament.Identity Class Library",
   "authors": [ "leo" ],
   "buildOptions": {

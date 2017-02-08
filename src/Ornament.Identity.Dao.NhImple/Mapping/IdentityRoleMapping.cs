@@ -13,10 +13,6 @@ namespace Ornament.Identity.Dao.NhImple.Mapping
             Map(x => x.Name).Unique().Length(255).Not.Nullable();
 
             Map(x => x.Remark).Length(255);
-
-            ExtendSetting();
         }
-
-        public abstract void ExtendSetting();
     }
 }

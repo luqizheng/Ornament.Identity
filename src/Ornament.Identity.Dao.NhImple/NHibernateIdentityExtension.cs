@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Ornament.Identity.Dao.NhImple.Mapping;
+using Ornament.Identity.Stores;
 
 namespace Ornament.Identity.Dao.NhImple
 {
@@ -10,43 +13,73 @@ namespace Ornament.Identity.Dao.NhImple
             NhUowFactoryBase nhbuilder
         )
         {
-            GetDefaultServices(builder);
-            nhbuilder.AddAssemblyOf(builder.UserType);
-            nhbuilder.AddAssemblyOf(typeof(NHibernateIdentityExtension));
+            if (nhbuilder == null)
+                throw new ArgumentNullException(nameof(nhbuilder));
 
-            //RegistPermissionRelative(nhbuilder, typeof(string), roleIdType, builder.RoleType, builder.UserType, userIdType,
-            //    builder.Services);
+            GetDefaultServices(builder, nhbuilder);
+            //AddDefualtMap(builder, nhbuilder);
             return builder;
         }
 
-
-        private static void GetDefaultServices(
-            IdentityBuilder builder)
+        public static IdentityBuilder AddEnterprise(this IdentityBuilder builder, NhUowFactoryBase nhbuilder)
         {
-            var userIdType = builder.UserType.BaseType.GetGenericArguments()[0];
-            var roleIdType = builder.RoleType.BaseType.GetGenericArguments()[0];
+            builder.Services.AddScoped(typeof(IOrgStore), typeof(OrgStore));
 
-            var userStoreType = typeof(UserStore<,,,>)
-                .MakeGenericType(builder.UserType, userIdType, builder.RoleType, roleIdType);
-            var roleStoreType = typeof(RoleStore<,>)
-                .MakeGenericType(builder.RoleType, roleIdType);
+            nhbuilder.AddType(typeof(OrgMapping));
+            var permissionType = typeof(PermissionMapping<>).MakeGenericType(builder.RoleType);
+            nhbuilder.AddType(permissionType);
 
-            var service1 = typeof(IUserStore<>).MakeGenericType(builder.UserType);
-
-            var service2 = typeof(IRoleStore<>).MakeGenericType(builder.RoleType);
-
-            builder.Services.AddScoped(service1, userStoreType);
-            builder.Services.AddScoped(service2, roleStoreType);
+            return builder;
         }
 
+        //private static void AddDefualtMap(IdentityBuilder identityBuilder,
+        //    NhUowFactoryBase nhbuilder)
         //{
+        //    var roleMappingClass = typeof(IdentityRoleMapping<,>)
+        //        .MakeGenericType(identityBuilder.RoleType, RoleIdType(identityBuilder));
 
+        //    nhbuilder.AddType(roleMappingClass);
 
-        //private static void BuildMappingBuilder()
-        //    var asmName = new AssemblyName("identity");
-        //    var asmBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(asmName, AssemblyBuilderAccess.Run);
-        //    var mdlBldr = asmBuilder.DefineDynamicModule("Main");
-        //    var typeBldr = mdlBldr.DefineType("UserStoreType", TypeAttributes.Public);
-        //} 
+        //    var userMappingClass = typeof(IdentityUserMapping<,,>)
+        //        .MakeGenericType(identityBuilder.UserType, UserIdType(identityBuilder), identityBuilder.RoleType);
+
+        //    nhbuilder.AddType(userMappingClass);
+        //}
+
+        private static void GetDefaultServices(
+            IdentityBuilder identity, NhUowFactoryBase nhibernateBuilder
+        )
+        {
+            var userStoreType = typeof(UserStore<,,,>)
+                .MakeGenericType(identity.UserType, UserIdType(identity), identity.RoleType, RoleIdType(identity));
+            var roleStoreType = typeof(RoleStore<,>)
+                .MakeGenericType(identity.RoleType, RoleIdType(identity));
+
+            var service1 = typeof(IUserStore<>).MakeGenericType(identity.UserType);
+            var service2 = typeof(IRoleStore<>).MakeGenericType(identity.RoleType);
+
+            identity.Services.AddScoped(service1, userStoreType);
+            identity.Services.AddScoped(service2, roleStoreType);
+
+            //add nh hibernate
+        }
+
+        private static Type UserIdType(this IdentityBuilder identity)
+        {
+            var userIdType = identity.UserType.BaseType;
+
+            if (userIdType != null)
+                return userIdType.GetGenericArguments()[0];
+            throw new ArgumentOutOfRangeException(nameof(identity), "IdentityUserType should inherit from IdentityUser");
+        }
+
+        private static Type RoleIdType(this IdentityBuilder identity)
+        {
+            var baseType = identity.RoleType.BaseType;
+
+            if (baseType != null)
+                return baseType.GetGenericArguments()[0];
+            throw new ArgumentOutOfRangeException(nameof(identity), "IdentityUserType should inherit from IdentityRole");
+        }
     }
 }

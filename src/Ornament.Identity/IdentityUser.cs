@@ -28,6 +28,8 @@ namespace Ornament.Identity
         {
         }
 
+        public virtual Org Org { get; set; }
+
         /// <summary>
         ///     Initializes a new instance of
         ///     <see>
@@ -36,9 +38,9 @@ namespace Ornament.Identity
         ///     .
         /// </summary>
         /// <param name="userName">The user name.</param>
-        public IdentityUser(string loginId) : this()
+        public IdentityUser(string userName) : this()
         {
-            LoginId = loginId;
+            UserName = userName;
         }
 
         /// <summary>
@@ -71,7 +73,7 @@ namespace Ornament.Identity
         /// </summary>
         /// <value>The name of the normalized user.</value>
         [Display(Name = "LoginId", ResourceType = typeof(Resource))]
-        public virtual string LoginId { get; set; }
+        public virtual string UserName { get; set; }
 
 
         /// <summary>

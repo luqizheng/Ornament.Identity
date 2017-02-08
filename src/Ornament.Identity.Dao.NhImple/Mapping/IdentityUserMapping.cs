@@ -3,20 +3,6 @@ using FluentNHibernate.Mapping;
 
 namespace Ornament.Identity.Dao.NhImple.Mapping
 {
-    //public class IdentityUserMapping :
-    //    IdentityUserMapping<string,IdentityRole>
-    //{
-
-    //}
-
-    //public class IdentityUserMapping<TKey,TRole>
-    //    : IdentityUserMapping<IdentityUser<TKey, TRole>, TKey, TRole>
-    //    where TKey : IEquatable<TKey>
-
-    //{
-    //}
-
-
     public abstract class IdentityUserMapping<TUser, TKey, TRole>
         : ClassMap<TUser>
         where TUser : IdentityUser<TKey, TRole>
@@ -27,8 +13,6 @@ namespace Ornament.Identity.Dao.NhImple.Mapping
         protected IdentityUserMapping()
         {
             Table("mbs_user");
-
-            ExtendSetting();
 
             Map(x => x.AccessFailedCount);
 
@@ -48,7 +32,7 @@ namespace Ornament.Identity.Dao.NhImple.Mapping
 
             Map(x => x.TwoFactorEnabled);
 
-            Map(x => x.LoginId).Not.Nullable().Length(64);
+            Map(x => x.UserName).Not.Nullable().Length(64);
 
             Map(x => x.Name).Unique().Length(64);
 
@@ -72,14 +56,16 @@ namespace Ornament.Identity.Dao.NhImple.Mapping
                     x.Map(a => a.LoginProvider).Length(64);
                     x.Map(a => a.ProviderDisplayName).Length(64);
                     x.Map(a => a.ProviderKey).Length(32);
-                }).ForeignKeyConstraintName("FK_User_Login_ID"); ;
+                }).ForeignKeyConstraintName("FK_User_Login_ID");
+            ;
 
             HasManyToMany(x => x.Roles)
                 .Table("mbs_user_roles")
                 .ParentKeyColumn("UserId")
                 .ForeignKeyConstraintNames("FK_user_role_userId", "FK_user_role_roleId");
-        }
 
-        protected abstract void ExtendSetting();
+            //enterprise setting
+            References(_ => _.Org);
+        }
     }
 }

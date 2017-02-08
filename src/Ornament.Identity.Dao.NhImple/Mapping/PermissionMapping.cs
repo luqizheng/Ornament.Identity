@@ -3,7 +3,6 @@
 namespace Ornament.Identity.Dao.NhImple.Mapping
 {
     public class PermissionMapping<TRole> : ClassMap<Permission<TRole>>
-
     {
         protected PermissionMapping()
         {
