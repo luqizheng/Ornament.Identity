@@ -1,0 +1,16 @@
+{
+  "title": "Authorization for identity ",
+  "version": "0.1.0-*",
+
+  "dependencies": {
+    "Microsoft.AspNetCore.Mvc": "1.1.1",
+    "NETStandard.Library": "1.6.1",
+    "Ornament.Identity": "0.4.2.3"
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}
