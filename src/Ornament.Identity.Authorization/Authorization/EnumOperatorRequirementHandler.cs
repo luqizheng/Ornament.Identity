@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Ornament.Identity.Web.Authorization
+namespace Ornament.Identity.Authorization
 {
     public class EnumOperatorRequirementHandler<TRequirement, TOperator> :
         AuthorizationHandler<TRequirement>

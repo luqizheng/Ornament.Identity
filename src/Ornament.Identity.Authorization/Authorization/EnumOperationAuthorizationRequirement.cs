@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Ornament.Identity.Web.Authorization
+namespace Ornament.Identity.Authorization
 {
     /// <summary>
     /// </summary>

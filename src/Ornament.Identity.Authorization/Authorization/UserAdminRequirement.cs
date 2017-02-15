@@ -1,4 +1,4 @@
-﻿namespace Ornament.Identity.Web.Authorization
+﻿namespace Ornament.Identity.Authorization
 {
     public enum UserManageOperator
     {

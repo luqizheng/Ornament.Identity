@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
-using Ornament.Identity.Web.Authorization;
+using Ornament.Identity.Authorization;
 
-namespace Ornament.Identity.Web
+namespace Ornament.Identity
 {
     public static class IdentityAdminOperatorExtentations
     {

@@ -28,8 +28,6 @@ namespace Ornament.Identity
         {
         }
 
-        public virtual Org Org { get; set; }
-
         /// <summary>
         ///     Initializes a new instance of
         ///     <see>
@@ -42,6 +40,8 @@ namespace Ornament.Identity
         {
             UserName = userName;
         }
+
+        public virtual Org Org { get; set; }
 
         /// <summary>
         ///     Gets or sets the ID.
@@ -167,14 +167,14 @@ namespace Ornament.Identity
         /// <value>The logins.</value>
         public virtual ICollection<IdentityUserLogin> Logins { get; } = new List<IdentityUserLogin>();
 
-        //}
-        //    return LoginId;
-        //{
-        //public override string ToString()
-        ///// <returns>A <see cref="System.String" /> that represents this instance.</returns>
-        ///// </summary>
-        /////     Returns the username for this user.
-
         ///// <summary>
+        /////     Returns the username for this user.
+        ///// </summary>
+        ///// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        //public override string ToString()
+        //{
+        //    return LoginId;
+
+        //}
     }
 }

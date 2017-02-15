@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using NHibernate.Linq;
 using Ornament.Stores;
-using Ornament.Uow;
 
 namespace Ornament.Identity.Dao.NhImple
 {
-
-
     public class RoleStore<TRole, TKey> :
         NhStore<TRole, TKey, IdentityNhUow>,
         IQueryableRoleStore<TRole>
@@ -85,9 +81,7 @@ namespace Ornament.Identity.Dao.NhImple
         {
             ThrowIfDisposed();
             if (role == null)
-            {
                 throw new ArgumentNullException(nameof(role));
-            }
             return Task.Run(() =>
             {
                 Context.Delete(role);
